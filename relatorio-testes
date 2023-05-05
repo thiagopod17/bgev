@@ -1,0 +1,106 @@
+A MODIFICAR.
+
+
+- ebgevd estima usando mle e constrói intervalo de confiança baseado na distribuição assintótica dos parâmetros ? Descrever um pouco de detalhes sobre isso nos comentarios da funcao. 
+
+- change Rep name brep
+
+- analisar codigo de testes aqui e verificar se tem algum erro ou se isso é normal de acontecer 
+e por que. Ao final, descrever aqui nesse documento os resultados e explicações. 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+======================
+TESTES dbgevd
+======================
+[1] "(y,mu,sigma,xi,delta) = ( -1e+05 -1e+05 1e+05 -1e+05 0 ) and dbgevd =  3.67879441171442e-06"
+[1] "(y,mu,sigma,xi,delta) = ( -1e+05 -1e+05 1e+05 -1e+05 1e+05 ) and dbgevd =  0"
+[1] "(y,mu,sigma,xi,delta) = ( -1e+05 -1e+05 1e+05 1e+05 0 ) and dbgevd =  3.67879441171442e-06"
+[1] "(y,mu,sigma,xi,delta) = ( -1e+05 -1e+05 1e+05 1e+05 1e+05 ) and dbgevd =  0"
+[1] "(y,mu,sigma,xi,delta) = ( -1e+05 -1e+05 1e+05 -1e+05 0 ) and dbgevd =  3.67879441171442e-06"
+[1] "(y,mu,sigma,xi,delta) = ( -1e+05 -1e+05 1e+05 -1e+05 1e+05 ) and dbgevd =  0"
+[1] "(y,mu,sigma,xi,delta) = ( -1e+05 -1e+05 1e+05 1e+05 0 ) and dbgevd =  3.67879441171442e-06"
+[1] "(y,mu,sigma,xi,delta) = ( -1e+05 -1e+05 1e+05 1e+05 1e+05 ) and dbgevd =  0"
+[1] "(y,mu,sigma,xi,delta) = ( -1e+05 1e+05 1e+05 -1e+05 0 ) and dbgevd =  0"
+[1] "(y,mu,sigma,xi,delta) = ( -1e+05 1e+05 1e+05 -1e+05 1e+05 ) and dbgevd =  NaN"
+[1] "(y,mu,sigma,xi,delta) = ( -1e+05 1e+05 1e+05 1e+05 0 ) and dbgevd =  1.83938799521424e-11"
+[1] "(y,mu,sigma,xi,delta) = ( -1e+05 1e+05 1e+05 1e+05 1e+05 ) and dbgevd =  NaN"
+[1] "(y,mu,sigma,xi,delta) = ( -1e+05 1e+05 1e+05 -1e+05 0 ) and dbgevd =  0"
+[1] "(y,mu,sigma,xi,delta) = ( -1e+05 1e+05 1e+05 -1e+05 1e+05 ) and dbgevd =  NaN"
+[1] "(y,mu,sigma,xi,delta) = ( -1e+05 1e+05 1e+05 1e+05 0 ) and dbgevd =  1.83938799521424e-11"
+[1] "(y,mu,sigma,xi,delta) = ( -1e+05 1e+05 1e+05 1e+05 1e+05 ) and dbgevd =  NaN"
+[1] "(y,mu,sigma,xi,delta) = ( 1e+05 -1e+05 1e+05 -1e+05 0 ) and dbgevd =  1.83938799521536e-11"
+[1] "(y,mu,sigma,xi,delta) = ( 1e+05 -1e+05 1e+05 -1e+05 1e+05 ) and dbgevd =  NaN"
+[1] "(y,mu,sigma,xi,delta) = ( 1e+05 -1e+05 1e+05 1e+05 0 ) and dbgevd =  0"
+[1] "(y,mu,sigma,xi,delta) = ( 1e+05 -1e+05 1e+05 1e+05 1e+05 ) and dbgevd =  NaN"
+[1] "(y,mu,sigma,xi,delta) = ( 1e+05 -1e+05 1e+05 -1e+05 0 ) and dbgevd =  1.83938799521536e-11"
+[1] "(y,mu,sigma,xi,delta) = ( 1e+05 -1e+05 1e+05 -1e+05 1e+05 ) and dbgevd =  NaN"
+[1] "(y,mu,sigma,xi,delta) = ( 1e+05 -1e+05 1e+05 1e+05 0 ) and dbgevd =  0"
+[1] "(y,mu,sigma,xi,delta) = ( 1e+05 -1e+05 1e+05 1e+05 1e+05 ) and dbgevd =  NaN"
+[1] "(y,mu,sigma,xi,delta) = ( 1e+05 1e+05 1e+05 -1e+05 0 ) and dbgevd =  3.67879441171442e-06"
+[1] "(y,mu,sigma,xi,delta) = ( 1e+05 1e+05 1e+05 -1e+05 1e+05 ) and dbgevd =  0"
+[1] "(y,mu,sigma,xi,delta) = ( 1e+05 1e+05 1e+05 1e+05 0 ) and dbgevd =  3.67879441171442e-06"
+[1] "(y,mu,sigma,xi,delta) = ( 1e+05 1e+05 1e+05 1e+05 1e+05 ) and dbgevd =  0"
+[1] "(y,mu,sigma,xi,delta) = ( 1e+05 1e+05 1e+05 -1e+05 0 ) and dbgevd =  3.67879441171442e-06"
+[1] "(y,mu,sigma,xi,delta) = ( 1e+05 1e+05 1e+05 -1e+05 1e+05 ) and dbgevd =  0"
+[1] "(y,mu,sigma,xi,delta) = ( 1e+05 1e+05 1e+05 1e+05 0 ) and dbgevd =  3.67879441171442e-06"
+[1] "(y,mu,sigma,xi,delta) = ( 1e+05 1e+05 1e+05 1e+05 1e+05 ) and dbgevd =  0"
+
+
+
+
+
+
+
+
+
+======================
+qbdgevd
+====================
+INVESTIGAR O COMPORTAMENTO ESTRANHO DA FUNCAO QUANDO delta tá proximo de -1 pela direita. 
+
+
+
+[1] "(p,mu,sigma,xi,delta) = ( 1e-05 -1e+05 1e+05 -1e+05 -0.99999 ) and qbgevd =  -100001"
+[1] "(p,mu,sigma,xi,delta) = ( 1e-05 -1e+05 1e+05 -1e+05 1e+05 ) and qbgevd =  -100001"
+[1] "(p,mu,sigma,xi,delta) = ( 1e-05 -1e+05 1e+05 1e+05 -0.99999 ) and qbgevd =  -Inf"
+[1] "(p,mu,sigma,xi,delta) = ( 1e-05 -1e+05 1e+05 1e+05 1e+05 ) and qbgevd =  -Inf"
+[1] "(p,mu,sigma,xi,delta) = ( 1e-05 -1e+05 1e+05 -1e+05 -0.99999 ) and qbgevd =  -100001"
+[1] "(p,mu,sigma,xi,delta) = ( 1e-05 -1e+05 1e+05 -1e+05 1e+05 ) and qbgevd =  -100001"
+[1] "(p,mu,sigma,xi,delta) = ( 1e-05 -1e+05 1e+05 1e+05 -0.99999 ) and qbgevd =  -Inf"
+[1] "(p,mu,sigma,xi,delta) = ( 1e-05 -1e+05 1e+05 1e+05 1e+05 ) and qbgevd =  -Inf"
+[1] "(p,mu,sigma,xi,delta) = ( 1e-05 1e+05 1e+05 -1e+05 -0.99999 ) and qbgevd =  99999"
+[1] "(p,mu,sigma,xi,delta) = ( 1e-05 1e+05 1e+05 -1e+05 1e+05 ) and qbgevd =  99999"
+[1] "(p,mu,sigma,xi,delta) = ( 1e-05 1e+05 1e+05 1e+05 -0.99999 ) and qbgevd =  -Inf"
+[1] "(p,mu,sigma,xi,delta) = ( 1e-05 1e+05 1e+05 1e+05 1e+05 ) and qbgevd =  -Inf"
+[1] "(p,mu,sigma,xi,delta) = ( 1e-05 1e+05 1e+05 -1e+05 -0.99999 ) and qbgevd =  99999"
+[1] "(p,mu,sigma,xi,delta) = ( 1e-05 1e+05 1e+05 -1e+05 1e+05 ) and qbgevd =  99999"
+[1] "(p,mu,sigma,xi,delta) = ( 1e-05 1e+05 1e+05 1e+05 -0.99999 ) and qbgevd =  -Inf"
+[1] "(p,mu,sigma,xi,delta) = ( 1e-05 1e+05 1e+05 1e+05 1e+05 ) and qbgevd =  -Inf"
+[1] "(p,mu,sigma,xi,delta) = ( 0.99999 -1e+05 1e+05 -1e+05 -0.99999 ) and qbgevd =  Inf"
+[1] "(p,mu,sigma,xi,delta) = ( 0.99999 -1e+05 1e+05 -1e+05 1e+05 ) and qbgevd =  Inf"
+[1] "(p,mu,sigma,xi,delta) = ( 0.99999 -1e+05 1e+05 1e+05 -0.99999 ) and qbgevd =  -99999"
+[1] "(p,mu,sigma,xi,delta) = ( 0.99999 -1e+05 1e+05 1e+05 1e+05 ) and qbgevd =  -99999"
+[1] "(p,mu,sigma,xi,delta) = ( 0.99999 -1e+05 1e+05 -1e+05 -0.99999 ) and qbgevd =  Inf"
+[1] "(p,mu,sigma,xi,delta) = ( 0.99999 -1e+05 1e+05 -1e+05 1e+05 ) and qbgevd =  Inf"
+[1] "(p,mu,sigma,xi,delta) = ( 0.99999 -1e+05 1e+05 1e+05 -0.99999 ) and qbgevd =  -99999"
+[1] "(p,mu,sigma,xi,delta) = ( 0.99999 -1e+05 1e+05 1e+05 1e+05 ) and qbgevd =  -99999"
+[1] "(p,mu,sigma,xi,delta) = ( 0.99999 1e+05 1e+05 -1e+05 -0.99999 ) and qbgevd =  Inf"
+[1] "(p,mu,sigma,xi,delta) = ( 0.99999 1e+05 1e+05 -1e+05 1e+05 ) and qbgevd =  Inf"
+[1] "(p,mu,sigma,xi,delta) = ( 0.99999 1e+05 1e+05 1e+05 -0.99999 ) and qbgevd =  100001"
+[1] "(p,mu,sigma,xi,delta) = ( 0.99999 1e+05 1e+05 1e+05 1e+05 ) and qbgevd =  100001"
+[1] "(p,mu,sigma,xi,delta) = ( 0.99999 1e+05 1e+05 -1e+05 -0.99999 ) and qbgevd =  Inf"
+[1] "(p,mu,sigma,xi,delta) = ( 0.99999 1e+05 1e+05 -1e+05 1e+05 ) and qbgevd =  Inf"
+[1] "(p,mu,sigma,xi,delta) = ( 0.99999 1e+05 1e+05 1e+05 -0.99999 ) and qbgevd =  100001"
+[1] "(p,mu,sigma,xi,delta) = ( 0.99999 1e+05 1e+05 1e+05 1e+05 ) and qbgevd =  100001"
