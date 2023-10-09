@@ -1,9 +1,18 @@
 A MODIFICAR.
 
+- names of functions:
+
+dbgev - density
+pbgev - cummulative probability function
+qbgev - quantile
+rbgev - random variables
+
+OK.
+
 
 - ebgevd estima usando mle e constrói intervalo de confiança baseado na distribuição assintótica dos parâmetros ? Descrever um pouco de detalhes sobre isso nos comentarios da funcao. 
 
-- change Rep name brep
+- change Rep name brep. OK
 
 - analisar codigo de testes aqui e verificar se tem algum erro ou se isso é normal de acontecer 
 e por que. Ao final, descrever aqui nesse documento os resultados e explicações. 

@@ -1,12 +1,12 @@
 ################################################################################
 # FUNCTION:              Bimodal GEV distribution proposed in Cira EG Otiniano,
 #                        Bianca S Paiva, Roberto Vila and Marcelo Bourguignon (2021)
-#  dbgevd                Density for the bimodal generalized extreme value distribution.
-#  qbgevd                Quantile function for the bimodal GEV distribution. 
-#  rbgevd                Random generation for the bimodal GEV distribution.
+#  dbgev                Density for the bimodal generalized extreme value distribution.
+#  qbgev                Quantile function for the bimodal GEV distribution. 
+#  rbgev                Random generation for the bimodal GEV distribution.
 #  likbgev               maximum likelihood (ML) estimators for the parameters of a BGEV
 #                        distribution
-#  ebgevd                Estimate the parameters of a BGEV and optionally construct 
+#  ebgev                Estimate the parameters of a BGEV and optionally construct 
 #                        a confidence interval for the parameters.
 ################################################################################
 
@@ -15,16 +15,41 @@ library(EnvStats)
 
 
 #----------------------------------------------------------------------
-dbgevd <- function(y, mu = 1, sigma = 1, xi = 0.3, delta = 2){ 
-  # Description:
-  #Compute the density for the  bimodal generalized extreme value distribution.
-  #Reference: Cira EG Otiniano et al (2021). A Bimodal Model for Extremes Data.
-  #1Department of Statistics, University of Bras´ılia, Darcy Ribeiro,
-  #Brasilia, 70910-900, DF, Brazil.
-  #Department of Statistics, Federal University of Rio Grande do
-  # Norte, Natal, 59078-970, RN, Brazil.
-  #   Parameters: y in R; mu in R; sigma > 0; xi in R ;  delta > -1;
-  
+dbgev <- function(y, mu = 1, sigma = 1, xi = 0.3, delta = 2){ 
+    # Description:
+    #Compute the density for the  bimodal generalized extreme value distribution.
+    #Reference: Cira EG Otiniano et al (2021). A Bimodal Model for Extremes Data.
+    #1Department of Statistics, University of Brasılia, Darcy Ribeiro,
+    #Brasilia, 70910-900, DF, Brazil.
+    #Department of Statistics, Federal University of Rio Grande do
+    # Norte, Natal, 59078-970, RN, Brazil.
+    #   Parameters: y in R; mu in R; sigma > 0; xi in R ;  delta > -1;
+    
+    # FUNCTION:
+    
+    # Error treatment of input parameters
+    if(sigma <= 0  || delta <= -1 )
+      stop("Failed to verify condition:
+             sigma <= 0  || delta <= -1")
+    
+    # Compute auxiliary variables:
+    T      <- (y-mu)*(abs(y-mu)^delta)
+    derivate_T <- (delta + 1)*(abs(y-mu)^delta)
+    
+    # Compute density points
+    pdf    <- dgevd(T, 0, scale=sigma, shape=xi)*derivate_T
+    
+    # Return Value
+    pdf
+}
+#----------------------------------------------------------------------
+
+
+
+
+#----------------------------------------------------------------------
+pbgev <- function(y, mu = 1, sigma = 1, xi = 0.3, delta = 2){ 
+  #Distribution Function
   # FUNCTION:
   
   # Error treatment of input parameters
@@ -33,19 +58,19 @@ dbgevd <- function(y, mu = 1, sigma = 1, xi = 0.3, delta = 2){
            sigma <= 0  || delta <= -1")
   
   # Compute auxiliary variables:
-  T      <- (y-mu)*(abs(y-mu)^delta)
-  derivate_T <- (delta + 1)*(abs(y-mu)^delta)
-  # Compute density points
-  pdf    <- dgevd(T, 0, scale=sigma, shape=xi)*derivate_T
+  Ti      <- (y-mu)*(abs(y-mu)^delta)
+  # Compute 
+  cdf    <- pgevd(Ti, loc=0, scale=sigma, shape=xi)
   # Return Value
-  return(pdf)
+  return(cdf)
 }
 #----------------------------------------------------------------------
 
 
 
+
 #----------------------------------------------------------------------
-qbgevd   <- function(p, mu = 1, sigma = 1, xi = 0.3, delta = 2){
+qbgev   <- function(p, mu = 1, sigma = 1, xi = 0.3, delta = 2){
   # Description:
   #   Compute the quantile for the 
   #   Bimodal GEV distribution.
@@ -67,7 +92,7 @@ qbgevd   <- function(p, mu = 1, sigma = 1, xi = 0.3, delta = 2){
 
 
 #----------------------------------------------------------------------
-rbgevd <- function(n, mu = 1, sigma = 1, xi = 0.3, delta = 2){
+rbgev <- function(n, mu = 1, sigma = 1, xi = 0.3, delta = 2){
   # Description:
   #   random generator for the 
   #   Bimodal GEV distribution.
@@ -106,7 +131,7 @@ likbgev <- function(y, theta = c(1, 1, 0.3, 2)){
   
   # Error treatment of input parameters
   if(length(theta)!=4){
-  stop("vector of parameters needs to be of length 4.")}
+    stop("vector of parameters needs to be of length 4.")}
   if(sigma <= 0  || delta <= -1 ){
     stop("Failed to verify condition:
            sigma <= 0  || delta <= -1")}
@@ -133,34 +158,34 @@ show_condition <- function(code) {
            message = function(c) "message"
   )}
 
-ebgevd <- function( x, Rep, mu = 1, sigma = 1, xi = 0.3, delta = 2,conf.level = 0.95){
+ebgev <- function( x, brep, mu = 1, sigma = 1, xi = 0.3, delta = 2,conf.level = 0.95){
   # Description:
   #   Estimate the parameters of a BGEV using MLE and optionally construct a confidence interval for
   #   the parameters.
   #   Parameters: x a numeric vector of a BGEV distribution sample;
-  #   Rep > 0 number of bootstrap replicas;
+  #   brep > 0 number of bootstrap replicas;
   #   mu in R; sigma > 0; xi in R ;  delta > -1;
   #   conf.level is the confidence level for the confidence interval.
   
   # FUNCTION:
   # Error treatment of input parameters
-  if(Rep<0){
-    stop("Number of Replicas must be greater than 0.")}
+  if(brep<0){
+    stop("Number of breplicas must be greater than 0.")}
   if(sigma <= 0  || delta <= -1 ){
     stop("Failed to verify condition:
            sigma <= 0  || delta <= -1")}
   
   # Create auxiliary variables:
-  muhat      = rep(NA, times = Rep)
-  sigmahat   = rep(NA, times = Rep)
-  xihat      = rep(NA, times = Rep)
-  deltahat   = rep(NA, times = Rep)
+  muhat      = rep(NA, times = brep)
+  sigmahat   = rep(NA, times = brep)
+  xihat      = rep(NA, times = brep)
+  deltahat   = rep(NA, times = brep)
   
   starts=c(mu, sigma, xi, delta)
   n<-length(x)
   
   # Resampling with reposition
-  for(k in (1:Rep)){
+  for(k in (1:brep)){
     i <- sample(1:n, size = n, replace = TRUE)
     Z <- x[i]
     while(show_condition(suppressWarnings(optim(par= starts, fn = likbgev, y=Z, method="BFGS")))[1]=="error"){
