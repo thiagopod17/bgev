@@ -24,6 +24,7 @@ dbgev <- function(y, mu = 1, sigma = 1, xi = 0.3, delta = 2){
     #Department of Statistics, Federal University of Rio Grande do
     # Norte, Natal, 59078-970, RN, Brazil.
     #   Parameters: y in R; mu in R; sigma > 0; xi in R ;  delta > -1;
+    # SUPORT OF THE DENSITY ? 
     
     # FUNCTION:
     
@@ -107,7 +108,7 @@ rbgev <- function(n, mu = 1, sigma = 1, xi = 0.3, delta = 2){
   # Compute auxiliary variables:
   U <- runif(n)
   # Compute random numbers
-  rnumber <- qbgevd(U, mu, sigma, xi, delta)
+  rnumber <- qbgev(U, mu, sigma, xi, delta)
   # Return Value
   return(rnumber)
 }
@@ -234,6 +235,18 @@ ebgev <- function( x, brep, mu = 1, sigma = 1, xi = 0.3, delta = 2,conf.level = 
   
 }
 
+
+
+bgev.support = function(mu, sigma, xi, delta){
+  support.lower = -Inf
+  support.upper = Inf
+  if( xi > 0)
+    support.lower = mu - (sigma/xi)^(1/(delta+1))
+  if( xi < 0)
+    support.upper = mu + abs(sigma/xi)^(1/(delta+1))
+  
+  return(c(support.lower,support.upper))
+}
 
 
 
