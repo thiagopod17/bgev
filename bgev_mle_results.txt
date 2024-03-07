@@ -1,0 +1,137 @@
+Simulation study results for fitting bgev parameters using MLE. 
+True value (mu,sigma,xi,delta) is assumed to be inside the region with lower 
+bound (-3,0.1,-3,-0.9) and upper bounds c(3,3,3,3). 
+
+Starting values get using the DEoptim function. 
+
+Then, optimization using  "L-BFGS-B" is applied. 
+
+If for some reason estimation could not be done (convergence problems e.g.), 
+then a new simulated example is run and we try estimation again. 
+
+For each parameter set we used 100 monte carlo replicas.
+
+Sample size is fixed at n = 100 
+
+Results show the true value of the parameter, mean of estimated values and sd. 
+
+      True        Mean        Sd
+mu      -1 -1.05765905 0.1775682
+sigma    1  1.07046425 0.2164934
+xi      -1 -1.00428828 0.1442242
+delta    0  0.06375642 0.1489173
+      True        Mean        Sd
+mu       0 -0.05214713 0.1752912
+sigma    1  1.06574101 0.1896531
+xi      -1 -1.00176912 0.1303244
+delta    0  0.09218720 0.1680841
+      True        Mean        Sd
+mu       1  0.94954809 0.1732744
+sigma    1  1.07234783 0.2175390
+xi      -1 -1.01067523 0.1336037
+delta    0  0.06462518 0.1740349
+      True        Mean        Sd
+mu      -1 -0.99473650 0.2885747
+sigma    2  2.07709496 0.3463525
+xi      -1 -1.01315950 0.1088433
+delta    0  0.03801845 0.1156858
+      True         Mean        Sd
+mu       0  0.009285988 0.2767770
+sigma    2  2.041079559 0.3490589
+xi      -1 -1.021389375 0.1070159
+delta    0  0.006380016 0.1366282
+      True       Mean        Sd
+mu       1  0.9913427 0.3028304
+sigma    2  2.0474283 0.3636553
+xi      -1 -1.0063354 0.1335533
+delta    0  0.0196323 0.1326054
+      True        Mean        Sd
+mu      -1 -0.97605380 0.1513453
+sigma    1  1.04414446 0.2445915
+xi       1  1.05391757 0.1675898
+delta    0  0.03836572 0.1307720
+      True       Mean        Sd
+mu       0 0.02333692 0.1396635
+sigma    1 1.03885846 0.1957618
+xi       1 1.03424994 0.1470564
+delta    0 0.04118335 0.1511366
+      True       Mean        Sd
+mu       1 1.02170723 0.1467232
+sigma    1 1.04620988 0.2070019
+xi       1 1.06030263 0.1745129
+delta    0 0.03490379 0.1454395
+      True        Mean        Sd
+mu      -1 -1.02471969 0.2644809
+sigma    2  1.99669256 0.4234317
+xi       1  1.04195288 0.1811696
+delta    0  0.01025006 0.1442008
+      True         Mean        Sd
+mu       0 -0.016014749 0.2882869
+sigma    2  1.999714281 0.4629063
+xi       1  1.017977062 0.1857972
+delta    0  0.006890906 0.1443574
+      True        Mean        Sd
+mu       1 0.983346657 0.2496719
+sigma    2 1.998346397 0.4069414
+xi       1 1.011563104 0.1720831
+delta    0 0.007650721 0.1300294
+      True      Mean         Sd
+mu      -1 -1.014212 0.06897975
+sigma    1  1.044249 0.14050772
+xi      -1 -1.010543 0.14150123
+delta    1  1.050227 0.27293773
+      True         Mean         Sd
+mu       0 -0.002939039 0.06174229
+sigma    1  1.032089939 0.16298683
+xi      -1 -1.024078567 0.15700636
+delta    1  1.012621286 0.29331604
+      True      Mean         Sd
+mu       1  0.995841 0.06199312
+sigma    1  1.021375 0.14844592
+xi      -1 -1.004585 0.14672940
+delta    1  1.086707 0.25102802
+      True       Mean         Sd
+mu      -1 -1.0078899 0.09108304
+sigma    2  2.0214849 0.34384106
+xi      -1 -0.9869096 0.12769576
+delta    1  1.0194512 0.25937380
+      True         Mean         Sd
+mu       0 -0.005434405 0.07588362
+sigma    2  2.046988058 0.30881320
+xi      -1 -0.997220292 0.13875264
+delta    1  1.040745826 0.27608485
+      True      Mean         Sd
+mu       1  1.008889 0.07871296
+sigma    2  2.050550 0.31051311
+xi      -1 -1.017870 0.12588255
+delta    1  1.040732 0.30025690
+      True       Mean         Sd
+mu      -1 -0.9955761 0.05772113
+sigma    1  1.0043424 0.13449907
+xi       1  1.0270398 0.16160107
+delta    1  1.0511195 0.17799565
+      True        Mean        Sd
+mu       0 0.003766651 0.0535950
+sigma    1 1.020172492 0.1264392
+xi       1 1.070818372 0.1524954
+delta    1 1.113145287 0.2304086
+      True     Mean         Sd
+mu       1 1.005593 0.05638949
+sigma    1 1.015735 0.12872489
+xi       1 1.036860 0.18125512
+delta    1 1.073301 0.22375704
+      True      Mean        Sd
+mu      -1 -1.007704 0.0661239
+sigma    2  2.054288 0.3185316
+xi       1  1.048947 0.1700035
+delta    1  1.096469 0.1977259
+      True        Mean         Sd
+mu       0 0.008704789 0.07422389
+sigma    2 2.109643549 0.29350453
+xi       1 1.063929504 0.16119979
+delta    1 1.067080201 0.21034274
+      True      Mean         Sd
+mu       1 0.9944551 0.07329294
+sigma    2 2.0510178 0.31402295
+xi       1 1.0558155 0.17801357
+delta    1 1.0669614 0.19926326
