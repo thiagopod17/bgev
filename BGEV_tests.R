@@ -2,147 +2,54 @@
 # TESTS
 #######################
 source("BGEV_functions.R")
+source("distCheck.R")
 library(fBasics)
+
+
+
+# MAKE A TEST SUPPORT FUNCTION AND LOOK AT THE VALUES OF THE DENSITY, MAKE A PLOT, ETC.
+# NEGATIVE VALUES IN THE VARIANCE IS BAD, WHEN USING THE INTEGRATION.
 
 #-------------------------------------------
 # dbgev
 # mu in R; sigma > 0; xi in R ;  delta > -1;
-mu = runif(1,-5,5)
-sigma = runif(1,0.001,10)
+for(i in 1:100){
+mu = runif(1,-2,2)
+sigma = runif(1,0.1,2)
 #xi = 0.1
-xi = runif(1,0.001,10)
-delta = runif(1,-1,10)
+xi = runif(1,0.3,0.9) * sign(runif(1,-1,1))
+delta = 1#runif(1,-0.6,2)
 support = bgev.support(mu, sigma, xi, delta)
-distCheck(fun="bgev", mu, sigma, xi, delta,  n = 2000, 
-          support.lower = support[1], support.upper = support[2], subdivisions = 5000 )
-fBasics::distCheck(fun="bgev", mu, sigma, xi, delta,  n = 2000)
-
-
-
-
-# WHY IS THIS GIVING STRANGE VALUES ?
-fun = function(x, ...) {
-  dbgev(x, ...)
+var.exists = ( xi != 0) & (xi < (delta + 1)/2)
+#support = c(-50,50)
+ret = distCheck(fun="bgev", n = 2000, 
+          support.lower = support[1], support.upper = support[2], subdivisions = 5000,
+          mu = mu, sigma = sigma, xi = xi, delta = delta, var.exists = var.exists, print.result = TRUE)
+if(ret$test1.density$error.check == FALSE)
+  break
+print(rbind(unlist(ret$test3.mean.var$computed),c(ret$test3.mean.var$expected$mean$value,ret$test3.mean.var$expected$var,ret$test3.mean.var$expected$log)))
+print(bgev.mean(mu = mu, sigma = sigma, xi = xi, delta = delta))
 }
 
-fun2 = function(x) {
-  dbgev(x, mu = mu, sigma = sigma, xi = xi, delta = delta)
-}
 
-integrate(f = fun, lower =  0.1, upper = 0.5, mu = mu, sigma = sigma, xi = xi, delta = delta,
-          subdivisions = 5)
-
-integrate(f = fun2, lower =  0.1, upper =1, subdivisions = 5)
-
-integrate(fun, lower = 0.1, upper = 0.5, subdivisions = 5000, 
-          mu = mu, sigma = sigma, xi = xi, delta = delta)
-
-curve(expr = fun2,  from = support[1], to = support[2])
-curve(fun, from = support[1], to = 3,mu = mu, sigma = sigma, xi = xi, delta = delta,)
-
-fun2(0)
+mean(rbgev(n = 100000, mu = mu, sigma = sigma, xi = xi, delta = delta))
 
 
-distCheck = function (fun = "norm", n = 1000, robust = TRUE, subdivisions = 1500, 
-                      support.lower = -Inf, support.upper = Inf,
-          ...) 
-{
-  #  ... : parameters passed to the tested function, e.g., mean and variance. 
-  cat("\nDistribution Check for:", fun, "\n ")
-  CALL = match.call()
-  cat("Call: ")
-  cat(paste(deparse(CALL), sep = "\n", collapse = "\n"), "\n", 
-      sep = "")
-  dfun = match.fun(paste("d", fun, sep = ""))
-  pfun = match.fun(paste("p", fun, sep = ""))
-  qfun = match.fun(paste("q", fun, sep = ""))
-  rfun = match.fun(paste("r", fun, sep = ""))
-  xmin = qfun(p = 0.01, ...)
-  xmax = qfun(p = 0.99, ...)
-  NORM = integrate(dfun, lower = support.lower, upper = support.upper, subdivisions = subdivisions, 
-                   stop.on.error = FALSE, ...)
-  
-  
-  cat("\n====================================
-      TEST 1. Normalization Check of density 'dfun': NORM  
-====================================
-     ")
-  cat("test if the density function integrates out to 1. Notice here 
-      that it would be advisable giving better limiting lower and upper bounds 
-      for integration in case the function is not defined in some region.
-      RESULT OF NUMERICAL INTEGRATION: \n")
-  print(NORM)
-  normCheck = (abs(NORM[[1]] - 1) < 0.01)
-  
-  
-  cat("\n====================================
-      TEST 2. Quantile and CDF function [p-pfun(qfun(p))]^2 Check: 
-====================================
-      ")
-  p = c(0.001, 0.01, 0.1, 0.5, 0.9, 0.99, 0.999)
-  P = pfun(qfun(p, ...), ...)
-  pP = round(rbind(p, P), 3)
-  rownames(pP) = c("fixed quantiles","computed quantiles with pfun and qfun")
-  print(pP)
-  RMSE = sd(p - P)
-  print(c("Computed RMSE of the difference",RMSE))
-  rmseCheck = (abs(RMSE) < 1e-04)
-  
-  
-  
-  cat("\n====================================
-      TEST 3. Sample moments comparison using rfun and dfun
-====================================
-      Sample moments using the RNG of the variable and comparing with 
-      the value obtained from integrating the density. 
-      CAREFULL FOR DISTRIBUTIONS WHICH DOES NOT HAVE WELL DEFINED FIRST AND/OR SECOND MOMENTS.
-r(", n, ") Check sample moments:\n", sep = "")
-  r = rfun(n = n, ...)
-  if (!robust) {
-    SAMPLE.MEAN = mean(r)
-    SAMPLE.VAR = var(r)
-  }
-  else {
-    robustSample = MASS::cov.mcd(r, quantile.used = floor(0.95 * 
-                                                            n))
-    SAMPLE.MEAN = robustSample$center
-    SAMPLE.VAR = robustSample$cov[1, 1]
-  }
-  SAMPLE = data.frame(t(c(MEAN = SAMPLE.MEAN, VAR = SAMPLE.VAR)), 
-                      row.names = "SAMPLE")
-  print(signif(SAMPLE, 3))
-  fun1 = function(x, ...) {
-    x * dfun(x, ...)
-  }
-  fun2 = function(x, ...) {
-    x^2 * dfun(x, ...)
-  }
-  MEAN = integrate(fun1, lower = support.lower, upper = support.upper, subdivisions = subdivisions, 
-                   stop.on.error = FALSE, ...)
 
-  VAR = integrate(fun2, lower = support.lower, upper = support.upper, subdivisions = subdivisions, 
-                  stop.on.error = FALSE, ...)
-  
-  EXACT = data.frame(t(c(MEAN = MEAN[[1]], VAR = VAR[[1]] - 
-                           MEAN[[1]]^2)), row.names = "EXACT ")
-  cat("\nCheck moments by numerical integration\n")
-  print(signif(EXACT, 3))
-  meanvarCheck = (abs(SAMPLE.VAR - EXACT$VAR)/EXACT$VAR < 0.1)
-  
-  cat("\nPrecision of moment computation using integration \n")
-  cat("   X   ")
-  print(MEAN)
-  cat("   X^2 ")
-  print(VAR)
-  
-  
-  cat("\n====================================
-      REPORT OF ALL 3 TESTS. SHOULD BE ALL TRUE TO PASS 
-====================================\n")
-  ans = list(normCheck = normCheck, rmseCheck = rmseCheck, 
-             meanvarCheck = meanvarCheck)
-  unlist(ans)
-}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
