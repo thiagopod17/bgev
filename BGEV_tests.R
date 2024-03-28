@@ -1,8 +1,8 @@
 ########################
 # TESTS
 #######################
-source("BGEV_functions.R")
-source("distCheck.R")
+source("package/bgev_functions.R")
+source("package/distCheck.R")
 library(fBasics)
 
 
