@@ -22,5 +22,9 @@ a genetic algorithm
 #upper = c(30,30,3,3)
 
 
+A função likbgev está devolvendo o valor errado, deveria ser
+logl <- sum(log(dbgevd))
 
-
+Eu testei com uma amostra muito grande e alguns valores iam para menos infinito, então eu removi os valores que o log iam para infinito ou menos infinito da soma final
+logl <- sum(log(dbgevd)*is.finite(log(dbgevd)),na.rm=TRUE) #inf times 0 = NaN
+  
