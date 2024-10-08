@@ -1,8 +1,8 @@
 
 
-=================================
-TO DO LIST FOR FUTURE VERSIONS
-=================================
+
+# TO DO LIST FOR FUTURE VERSIONS
+
 
 - find a more well behaved integrate function or put a warning in the output when some of it does not converge so that the user interpret correctly the test results. 
 - start values for mle from estimation of unimodal GEV and choose delta = 0. 
